@@ -11,6 +11,8 @@ datasource db {
 model Todo{
   id String @id @default(uuid()) @map("_id")
   title String?
+  indentation Int @default(0)
+  order Int @default(0)
   isCompleted Boolean @default(false)
   createdAt DateTime @default(now())
 }

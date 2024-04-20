@@ -1,5 +1,5 @@
 "use client"
-import { deleteTodoLineSuppr, editBase,createAdd } from "@/app/actions/todoActions";
+import { deleteTodoLineSuppr, editBase,createAdd,IndentationBase } from "@/app/actions/todoActions";
 import { useState,useEffect,useRef } from "react";
 import { todoType } from "@/types/todoType";
 
@@ -23,17 +23,36 @@ const EditTodo = ({ todo }: { todo: todoType }) => {
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         const inputValue = (e.target as HTMLInputElement).value;
-        if ((e.keyCode === 46 || e.keyCode === 8) && inputValue === "" && !deleteInProgress) { // Vérifie si la touche appuyée est la touche "Delete" ou "Backspace", si le champ est vide et si la suppression n'est pas en cours
+
+        // Vérifie si la touche appuyée est la touche "Delete" ou "Backspace", si le champ est vide et si la suppression n'est pas en cours
+        if ((e.keyCode === 46 || e.keyCode === 8) && inputValue === "" && !deleteInProgress) {
             if (todo.id) {
                 deleteTodoLineSuppr(todo.id);
                 setDeleteInProgress(true); // Met à jour l'état de la suppression
             }
         }
+        // Vérifie si la touche Entré est appuyé
         else if(e.keyCode === 13)
         {
             if (todo.id) {
              createAdd(); 
             } 
+        }
+        // Vérifie si la touche Tab est appuyée et que la touche Shift est également enfoncée
+        else if (e.keyCode === 9 && e.shiftKey) {
+            e.preventDefault(); // Empêche le comportement par défaut de la touche Tab
+            if (todo.id && typeof todo.indentation === 'number') {
+                IndentationBase(todo.id, todo.indentation, "indentless");
+            }
+        }
+        //verifie si seulement la touche tab est appuyée
+        else if(e.keyCode === 9)
+        {
+            e.preventDefault();
+            if(todo.id && typeof todo.indentation == 'number')
+            {
+                IndentationBase(todo.id,todo.indentation,"indentplus");
+            }
         }
     }
 

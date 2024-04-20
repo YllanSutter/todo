@@ -8,6 +8,8 @@ async function getData() {
       title:true,
       id:true,
       isCompleted:true,
+      indentation:true,
+      order:true
     },
     orderBy:{
       createdAt: "asc"

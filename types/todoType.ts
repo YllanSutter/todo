@@ -3,4 +3,6 @@ export type todoType = {
     title?: string | null
     isCompleted: boolean
     createdAt?: Date
+    indentation?: number
+    order?: number
 }

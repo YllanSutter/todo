@@ -1,6 +1,9 @@
 {
   "name": "todo",
   "version": "0.1.0",
+  "bin":{
+    "todo-app-next": "./app/page.tsx"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -24,5 +27,13 @@
     "prisma": "^5.12.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "pkg": {
+    "scripts": "todoappnext.js",
+    "targets": [
+      "node16-linux-x64",
+      "node16-macos-x64",
+      "node16-win-x64"
+    ]
   }
 }

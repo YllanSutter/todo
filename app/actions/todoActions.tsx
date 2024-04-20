@@ -106,3 +106,37 @@ export async function deleteTodoLineSuppr(todoId: string) {
     });
     revalidatePath("/");
 }
+
+export async function IndentationBase(todoId: string,todoIndentation:number,todoOrder:string) {
+
+    let newIndentation: number;
+    const currentIndentation = todoIndentation || 0; // Valeur actuelle de l'indentation
+    if(todoOrder === "indentplus")
+    {
+        newIndentation = currentIndentation + 1; // Incrément de 1
+    }
+    else
+    {
+        if(currentIndentation>0)
+        {
+
+            newIndentation = currentIndentation - 1; // On enleve 1
+        }
+        else
+        {
+            newIndentation = 0;
+        }
+    }
+
+    // Mettre à jour la base de données avec la nouvelle valeur d'indentation
+    await prisma.todo.update({
+        where: {
+            id: todoId
+        },
+        data: {
+            indentation: newIndentation
+        }
+    });
+
+    revalidatePath("/");
+}
