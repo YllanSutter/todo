@@ -18,6 +18,16 @@ export async function create(formData:FormData) {
     revalidatePath("/")
 }
 
+export async function createAdd() {
+    await prisma.todo.create(
+    {
+        data:{
+            title: "",
+        },
+    });
+    revalidatePath("/");
+}
+
 export async function changeStatus(formData : FormData){
     const inputId = formData.get("inputId") as string
     const todo = await prisma.todo.findUnique({
@@ -63,6 +73,19 @@ export async function edit(formData:FormData) {
     revalidatePath("/");
 }
 
+export async function editBase(todoId: string, newTitle: string) {
+    await prisma.todo.update({
+        where: {
+            id: todoId
+        },
+        data: {
+            title: newTitle
+        }
+    });
+
+    revalidatePath("/");
+}
+
 export async function deleteTodoLine(FormData:FormData) {
     const inputId = FormData.get("inputId") as string
 
@@ -70,6 +93,15 @@ export async function deleteTodoLine(FormData:FormData) {
     {
         where: {
             id : inputId,
+        },
+    });
+    revalidatePath("/");
+}
+
+export async function deleteTodoLineSuppr(todoId: string) {
+    await prisma.todo.delete({
+        where: {
+            id: todoId,
         },
     });
     revalidatePath("/");

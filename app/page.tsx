@@ -10,7 +10,7 @@ async function getData() {
       isCompleted:true,
     },
     orderBy:{
-      createdAt: "desc"
+      createdAt: "asc"
     },
   });
   return data;

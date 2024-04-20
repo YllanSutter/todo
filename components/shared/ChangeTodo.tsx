@@ -2,7 +2,8 @@ import { changeStatus } from "@/app/actions/todoActions";
 import Form from "../ui/Form";
 import Button from "../ui/Button";
 import Input from "../ui/Input";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+import { AiOutlineCheck  } from "react-icons/ai";
+import { RxCross1 } from "react-icons/rx";
 import { todoType } from "@/types/todoType";
 
 const ChangeTodo = ({todo} : {todo:todoType}) => {
@@ -14,7 +15,7 @@ const ChangeTodo = ({todo} : {todo:todoType}) => {
             value = {todo.id}
             type = "hidden"
         />
-        <Button actionButton type="submit" text={<AiOutlineCheckCircle/>}/>
+        <Button actionButton checked = {todo.isCompleted || false} type="submit" text={todo.isCompleted ? <AiOutlineCheck />: <RxCross1 />}/>
     </Form>
   )
 }
