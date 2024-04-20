@@ -34,8 +34,8 @@ const EditTodo = ({ todo }: { todo: todoType }) => {
         // Vérifie si la touche Entré est appuyé
         else if(e.keyCode === 13)
         {
-            if (todo.id) {
-             createAdd(); 
+            if (todo.id && typeof todo.indentation === 'number' && typeof todo.order === 'number') {
+             createAdd(todo.indentation,todo.order); 
             } 
         }
         // Vérifie si la touche Tab est appuyée et que la touche Shift est également enfoncée

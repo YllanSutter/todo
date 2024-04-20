@@ -15,4 +15,5 @@ model Todo{
   order Int @default(0)
   isCompleted Boolean @default(false)
   createdAt DateTime @default(now())
+  hidden Boolean @default(false)
 }

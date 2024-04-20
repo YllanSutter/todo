@@ -9,10 +9,11 @@ async function getData() {
       id:true,
       isCompleted:true,
       indentation:true,
-      order:true
+      order:true,
+      hidden:true,
     },
     orderBy:{
-      createdAt: "asc"
+      order: "asc"
     },
   });
   return data;

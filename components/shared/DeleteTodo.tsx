@@ -16,6 +16,7 @@ const deleteTodo = ({todo}: {todo:todoType}) => {
     />
     <Button
       actionButton
+      deleted
       text={<BsFillTrashFill/>}
       type="submit"
     />

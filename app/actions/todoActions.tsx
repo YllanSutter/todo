@@ -18,15 +18,45 @@ export async function create(formData:FormData) {
     revalidatePath("/")
 }
 
-export async function createAdd() {
-    await prisma.todo.create(
-    {
+export async function createAdd(Currentindentation: number, Currentorder: number) {
+    const baseTodos = await prisma.todo.findMany();
+    let newOrder:number;
+
+
+    // Créer la nouvelle tâche avec l'ordre incrémenté
+    newOrder = Currentorder + 1;
+
+    await prisma.todo.create({
         data:{
             title: "",
+            indentation: Currentindentation,
+            order: newOrder,
         },
     });
+
+    // Mettre à jour les ordres des tâches suivantes si nécessaire
+    const todosToUpdate = baseTodos.filter(todo => todo.order >= newOrder);
+
+    if (todosToUpdate.length > 0) {
+        // Incrémenter les ordres des tâches suivantes
+        await prisma.todo.updateMany({
+            where: {
+                id: {
+                    in: todosToUpdate.map(todo => todo.id)
+                }
+            },
+            data: {
+                order: {
+                    increment: 1
+                }
+            }
+        });
+    }
+
     revalidatePath("/");
 }
+
+
 
 export async function changeStatus(formData : FormData){
     const inputId = formData.get("inputId") as string
@@ -137,6 +167,49 @@ export async function IndentationBase(todoId: string,todoIndentation:number,todo
             indentation: newIndentation
         }
     });
+
+    revalidatePath("/");
+}
+
+
+export async function HideTodoChildLines(Currentindentation: number, Currentorder: number) {
+    let baseTodos = await prisma.todo.findMany();
+
+    // Trier les tâches par ordre croissant
+    baseTodos = baseTodos.sort((a, b) => a.order - b.order);
+
+    // Trouver la tâche correspondant à l'ordre actuel
+    const selectedTodo = baseTodos.find(todo => todo.order === Currentorder);
+
+    // Si aucune tâche ne correspond à l'ordre actuel, ne rien faire
+    if (!selectedTodo) {
+        return;
+    }
+
+    // Obtenir l'indice de la tâche sélectionnée dans la liste des tâches triées
+    const selectedIndex = baseTodos.findIndex(todo => todo.order === Currentorder);
+
+    // Parcourir toutes les tâches pour mettre à jour celles qui doivent l'être, à partir de l'indice de la tâche sélectionnée
+    for (let i = selectedIndex + 1; i < baseTodos.length; i++) {
+        const todo = baseTodos[i];
+
+        console.log(todo.order+ "Base : "+todo.indentation+" / Current : "+Currentindentation);
+        // Si l'indentation de la tâche est inférieure ou égale à l'indentation de la tâche sélectionnée, arrêter la mise à jour
+        if (todo.indentation <= Currentindentation) {
+            break;
+        }
+
+        // Mettre à jour la tâche pour inverser l'état de hidden
+        await prisma.todo.update({
+            where: {
+                id: todo.id
+            },
+            data: {
+                hidden: !todo.hidden
+            }
+        });
+        
+    }
 
     revalidatePath("/");
 }

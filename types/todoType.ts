@@ -5,4 +5,5 @@ export type todoType = {
     createdAt?: Date
     indentation?: number
     order?: number
+    hidden?: boolean
 }
