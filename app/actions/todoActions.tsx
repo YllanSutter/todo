@@ -1,7 +1,7 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
-import { prisma } from "@/utils/prisma"
+import { revalidatePath } from "next/cache";
+import { prisma } from "@/utils/prisma";
 
 export async function create(formData:FormData) {
     const input = formData.get("input") as string;
@@ -188,12 +188,21 @@ export async function HideTodoChildLines(Currentindentation: number, Currentorde
 
     // Obtenir l'indice de la tâche sélectionnée dans la liste des tâches triées
     const selectedIndex = baseTodos.findIndex(todo => todo.order === Currentorder);
+    const todoBase = baseTodos[selectedIndex];
+    await prisma.todo.update({
+        where: {
+            id: todoBase.id
+        },
+        data: {
+            hiddenchild: !todoBase.hiddenchild
+        } 
+    });
 
     // Parcourir toutes les tâches pour mettre à jour celles qui doivent l'être, à partir de l'indice de la tâche sélectionnée
     for (let i = selectedIndex + 1; i < baseTodos.length; i++) {
         const todo = baseTodos[i];
 
-        console.log(todo.order+ "Base : "+todo.indentation+" / Current : "+Currentindentation);
+        //console.log(todo.order+ "Base : "+todo.indentation+" / Current : "+Currentindentation);
         // Si l'indentation de la tâche est inférieure ou égale à l'indentation de la tâche sélectionnée, arrêter la mise à jour
         if (todo.indentation <= Currentindentation) {
             break;

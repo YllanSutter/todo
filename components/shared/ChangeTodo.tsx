@@ -9,13 +9,14 @@ import { todoType } from "@/types/todoType";
 const ChangeTodo = ({todo} : {todo:todoType}) => {
  
   return (
-    <Form action={changeStatus}>
+    <Form action={changeStatus} 
+    className = "self-start">
         <Input
             name = "inputId"
             value = {todo.id}
             type = "hidden"
         />
-        <Button actionButton checked = {todo.isCompleted || false} type="submit" text={todo.isCompleted ? <AiOutlineCheck />: <RxCross1 />}/>
+        <Button actionButton checked = {todo.isCompleted || false} type="submit" text={todo.isCompleted ? <RxCross1 /> : <AiOutlineCheck />}/>
     </Form>
   )
 }

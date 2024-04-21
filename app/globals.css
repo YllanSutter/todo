@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.todo-item::before
+{
+    content:"";
+    position: absolute;
+    left: -18px;
+    height: 100%;
+    border-left: 1px solid #fff;
+    top: 0;
+    opacity: 0.3;
+}
+
+.todo-item.nth2::after
+{
+    content:"";
+    position: absolute;
+    left: -58px;
+    height: 100%;
+    border-left: 1px solid #fff;
+    top: 0;
+    opacity: 0.3;
+}
+
+textarea {
+    resize: none;
+  }

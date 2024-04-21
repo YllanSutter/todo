@@ -11,7 +11,7 @@ interface formProps {
 const Form = ({children, action, className, onSubmit}:formProps) => {
   const ref = useRef<HTMLFormElement>(null) //permet de faire en sorte que le form se reset quand on le lance
   return  <form 
-  className="{className}" 
+  className={className} 
   onSubmit={onSubmit} 
   ref={ref} 
   action={async (formData) => {

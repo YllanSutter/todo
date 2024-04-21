@@ -6,4 +6,5 @@ export type todoType = {
     indentation?: number
     order?: number
     hidden?: boolean
+    hiddenchild?: boolean
 }

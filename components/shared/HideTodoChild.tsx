@@ -4,8 +4,8 @@ import Button from "../ui/Button";
 import Form from "../ui/Form";
 import Input from "../ui/Input";
 import { todoType } from "@/types/todoType";
-import { FaAngleDown } from "react-icons/fa6";
-import { FaAngleUp } from "react-icons/fa6";
+import { MdOutlineArrowDropDown } from "react-icons/md";
+import { MdOutlineArrowRight } from "react-icons/md";
 
 
 
@@ -21,7 +21,7 @@ const HideTodoChild = ({ todo }: {todo:todoType}) => {
     <Button 
         actionButton 
         abs 
-        text={<FaAngleDown/>} 
+        text={todo.hiddenchild?<MdOutlineArrowRight />:<MdOutlineArrowDropDown />} 
         onClick={(hideTodoChildAction)}
         type="submit"
     />

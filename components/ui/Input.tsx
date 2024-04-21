@@ -1,3 +1,5 @@
+import { MutableRefObject } from "react";
+
 interface inputProps {
   name : string;
   type : string;
@@ -8,7 +10,7 @@ interface inputProps {
 const Input = ({name, type, placeholder, value}:inputProps) => {
   return (
     <>
-      <input className="w-full p-2 border border-gray-200" 
+      <input className="w-full p-2 border-b-2 border-white-100 text-white bg-transparent"
         name={name} 
         type={type} 
         placeholder={placeholder} 

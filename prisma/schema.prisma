@@ -16,4 +16,5 @@ model Todo{
   isCompleted Boolean @default(false)
   createdAt DateTime @default(now())
   hidden Boolean @default(false)
+  hiddenchild Boolean @default(false)
 }
