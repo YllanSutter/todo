@@ -8,13 +8,21 @@ datasource db {
 }
 
 
-model Todo{
-  id String @id @default(uuid()) @map("_id")
-  title String?
-  indentation Int @default(0)
-  order Int @default(0)
-  isCompleted Boolean @default(false)
-  createdAt DateTime @default(now())
-  hidden Boolean @default(false)
-  hiddenchild Boolean @default(false)
+model Group {
+  id         String   @id @default(uuid()) @map("_id")
+  name       String
+  createdAt  DateTime @default(now())
+  selected   Boolean  @default(false)
+}
+
+model Todo {
+  id            String   @id @default(uuid()) @map("_id")
+  title         String?
+  indentation   Int      @default(0)
+  order         Int      @default(0)
+  isCompleted   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  hidden        Boolean  @default(false)
+  hiddenchild   Boolean  @default(false)
+  groupId       String? @default("")
 }

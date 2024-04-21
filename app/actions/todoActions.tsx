@@ -3,16 +3,47 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/prisma";
 
-export async function create(formData:FormData) {
+export async function create(formData: FormData) {
     const input = formData.get("input") as string;
 
-    // if(!input.trim()){ // a mettre si on veut pas avoir la possibilité de créer des lignes vides
-    //     return;
-    // } 
+    // Récupérer l'ID du groupe sélectionné
+    const selectedGroup = await prisma.group.findFirst({
+        where: {
+            selected: true
+        }
+    });
+
+    // Récupérer la valeur maximale de l'ordre dans les todos du groupe sélectionné
+    const maxOrderTodo = await prisma.todo.findFirst({
+        where: {
+            groupId: selectedGroup?.id,
+        },
+        orderBy: {
+            order: 'desc',
+        },
+    });
+
+    const newOrder = maxOrderTodo ? maxOrderTodo.order + 1 : 0;
+    const newIndentation = maxOrderTodo ? maxOrderTodo.indentation : 0;
 
     await prisma.todo.create({
-        data:{
+        data: {
             title: input,
+            groupId: selectedGroup ? selectedGroup.id : null,
+            order: newOrder,
+            indentation: newIndentation,
+        },
+    });
+
+    revalidatePath("/");
+}
+
+export async function createGroup(formData:FormData) {
+    const input = formData.get("input") as string;
+
+    await prisma.group.create({
+        data:{
+            name: input,
         },
     });
     revalidatePath("/")
@@ -20,17 +51,38 @@ export async function create(formData:FormData) {
 
 export async function createAdd(Currentindentation: number, Currentorder: number) {
     const baseTodos = await prisma.todo.findMany();
-    let newOrder:number;
+    let newOrder: number;
 
+    // Récupérer l'ID du groupe sélectionné
+    const selectedGroup = await prisma.group.findFirst({
+        where: {
+            selected: true
+        }
+    });
+
+    // Si aucun groupe n'est sélectionné, faites quelque chose, comme générer une erreur ou ne pas attribuer d'ID de groupe à la tâche
+
+    if (!selectedGroup) {
+        // Gérer le cas où aucun groupe n'est sélectionné
+        console.error("Aucun groupe sélectionné.");
+        return;
+    }
+    else
+    {
+        console.log("tset")
+    }
+
+    const selectedGroupId = selectedGroup.id;
 
     // Créer la nouvelle tâche avec l'ordre incrémenté
     newOrder = Currentorder + 1;
 
     await prisma.todo.create({
-        data:{
+        data: {
             title: "",
             indentation: Currentindentation,
             order: newOrder,
+            groupId: selectedGroupId // Assigner l'ID du groupe sélectionné à la tâche
         },
     });
 
@@ -55,7 +107,6 @@ export async function createAdd(Currentindentation: number, Currentorder: number
 
     revalidatePath("/");
 }
-
 
 
 export async function changeStatus(formData : FormData){
@@ -219,6 +270,37 @@ export async function HideTodoChildLines(Currentindentation: number, Currentorde
         });
         
     }
+
+    revalidatePath("/");
+}
+
+
+export async function selectGroupTo(groupId: string, selectedBase: boolean) 
+{
+    let baseGroups = await prisma.group.findMany();
+
+    if (baseGroups.length > 0) {
+        // Incrémenter les ordres des tâches suivantes
+        await prisma.group.updateMany({
+            where: {
+                id: {
+                    in: baseGroups.map(group => group.id)
+                }
+            },
+            data: {
+                selected: false
+            }
+        });
+    }
+
+    await prisma.group.update({
+        where: {
+            id: groupId
+        },
+        data: {
+            selected: true
+        }
+    });
 
     revalidatePath("/");
 }

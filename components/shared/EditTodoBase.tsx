@@ -125,7 +125,7 @@ const EditTodo = ({ todo }: { todo: todoType }) => {
             if (nextInput) {
                 nextInput.focus(); // Mettre le focus sur l'élément
             }
-        }, 50);
+        }, 150);
     }
 
 
