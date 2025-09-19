@@ -2,6 +2,7 @@ import ChangeTodo from "./ChangeTodo";
 import { todoType } from "@/types/todoType";
 import EditTodoBase from "./EditTodoBase";
 import DeleteTodo from "./DeleteTodo";
+import ActionsTodo from "./ActionsTodo";
 import HideTodoChild from "./HideTodoChild";
 import { useEffect, useRef } from 'react';
 import { before } from "node:test";
@@ -41,7 +42,7 @@ const Todo = async({ todo }: { todo: todoType }) => {
     display: todo.hidden === true ? "none" : "flex",
   };
 
-  let todoClassName: string = "w-full flex items-center justify-between px-10 rounded-2xl py-1 relative group ";
+  let todoClassName: string = "w-full flex items-center justify-between px-10 py-1 relative group border-b border-slate-800 ";
 
   if (todo.indentation) {
     todoClassName += todo.indentation >= 1 ? "todo-item" : "";
@@ -53,7 +54,8 @@ const Todo = async({ todo }: { todo: todoType }) => {
       <HideTodoChild todo={todo} />
       <ChangeTodo todo={todo} />
       <EditTodoBase todo={todo} />
-      <div className="flex items-center gap-5 childclass transition-all opacity-0 group-hover:opacity-100">
+      <div className="flex items-center gap-2 childclass transition-all opacity-0 group-hover:opacity-100">
+        <ActionsTodo todo={todo} />
         <DeleteTodo todo={todo} />
       </div>
     </div>

@@ -24,7 +24,7 @@ const EditTodo = ({ todo } : {todo:todoType}) => {
 
     return (
    
-        <div className="flex gap-5 items-center">
+        <div className="flex gap-2 items-center">
             <Button
                 onClick={(handleEdit)}
                 text={<BiEdit />}

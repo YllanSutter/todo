@@ -131,7 +131,7 @@ const EditTodo = ({ todo }: { todo: todoType }) => {
 
 
     return (
-        <div className="flex gap-5 items-center w-full">
+        <div className="flex gap-2 items-center w-full">
             <div className="flex justify-center w-full">
                 <textarea
                     rows={1}
