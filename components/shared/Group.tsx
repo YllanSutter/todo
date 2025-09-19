@@ -3,11 +3,10 @@ import SelectGroup from './SelectGroup';
 
 const Group = ({ group }: {group:groupType}) => {
   const groupStyle = {
-    opacity: group.selected === true ? "1" : "0.5",
-    padding: group.selected === true ? "0" : "0 20px"
+    opacity: group.selected === true ? "1" : "0.5"
   };
 
-  let groupClassName: string = "text-white m-2 flex gap-2 items-center :hover:px-0";
+  let groupClassName: string = "card-body p-4 items-center text-center";
   
   return (
     <div  className={groupClassName} style={groupStyle}>

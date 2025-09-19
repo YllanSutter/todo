@@ -19,7 +19,7 @@ const HideTodoChild = ({ todo }: {todo:todoType}) => {
     
   return (
     <Button 
-        actionButton 
+        smallButton 
         abs 
         text={todo.hiddenchild?<MdOutlineArrowRight />:<MdOutlineArrowDropDown />} 
         onClick={(hideTodoChildAction)}

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@plugin "daisyui";
 
 
 .todo-item::before
@@ -9,7 +10,7 @@
     position: absolute;
     left: -18px;
     height: 100%;
-    border-left: 1px solid #fff;
+    border-left: 1px solid #ffffff20;
     top: 0;
     opacity: 0.3;
 }
@@ -20,7 +21,7 @@
     position: absolute;
     left: -58px;
     height: 100%;
-    border-left: 1px solid #fff;
+    border-left: 1px solid #ffffff20;
     top: 0;
     opacity: 0.3;
 }

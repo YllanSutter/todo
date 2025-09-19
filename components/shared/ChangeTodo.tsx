@@ -10,7 +10,7 @@ const ChangeTodo = ({todo} : {todo:todoType}) => {
  
   return (
     <Form action={changeStatus} 
-    className = "self-start">
+    className = "">
         <Input
             name = "inputId"
             value = {todo.id}

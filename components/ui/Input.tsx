@@ -10,7 +10,7 @@ interface inputProps {
 const Input = ({name, type, placeholder, value}:inputProps) => {
   return (
     <>
-      <input className="w-full p-2 border-b-2 border-white-100 text-white bg-transparent"
+      <input className="input w-full p-2 border-b border-[#ffffff10] text-white bg-transparent"
         name={name} 
         type={type} 
         placeholder={placeholder} 

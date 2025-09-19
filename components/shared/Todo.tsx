@@ -42,7 +42,7 @@ const Todo = async({ todo }: { todo: todoType }) => {
     display: todo.hidden === true ? "none" : "flex",
   };
 
-  let todoClassName: string = "w-full flex items-center justify-between px-10 py-1 relative group border-b border-slate-800 ";
+  let todoClassName: string = "w-full flex items-center justify-between px-10 py-1 relative group border-b border-[#ffffff10] ";
 
   if (todo.indentation) {
     todoClassName += todo.indentation >= 1 ? "todo-item" : "";
