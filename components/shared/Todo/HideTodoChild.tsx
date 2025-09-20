@@ -1,8 +1,8 @@
 "use client"
 import { HideTodoChildLines } from "@/app/actions/todoActions";
-import Button from "../ui/Button";
-import Form from "../ui/Form";
-import Input from "../ui/Input";
+import Button from "../../ui/Button";
+import Form from "../../ui/Form";
+import Input from "../../ui/Input";
 import { todoType } from "@/types/todoType";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { MdOutlineArrowRight } from "react-icons/md";

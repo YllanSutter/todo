@@ -1,9 +1,9 @@
-import ChangeTodo from "./ChangeTodo";
+import ChangeTodo from "./Todo/ChangeTodo";
 import { todoType } from "@/types/todoType";
-import EditTodoBase from "./EditTodoBase";
-import DeleteTodo from "./DeleteTodo";
-import ActionsTodo from "./ActionsTodo";
-import HideTodoChild from "./HideTodoChild";
+import EditTodoBase from "./Todo/EditTodoBase";
+import DeleteTodo from "./Todo/DeleteTodo";
+import ActionsTodo from "./Todo/ActionsTodo";
+import HideTodoChild from "./Todo/HideTodoChild";
 import { useEffect, useRef } from 'react';
 import { before } from "node:test";
 import { prisma } from "@/utils/prisma";

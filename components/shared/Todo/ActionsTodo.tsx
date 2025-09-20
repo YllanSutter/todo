@@ -1,8 +1,8 @@
 "use client"
 import ActionsTodoMore from "./ActionsTodoMore";
-import Button from "../ui/Button";
-import Form from "../ui/Form";
-import Input from "../ui/Input";
+import Button from "../../ui/Button";
+import Form from "../../ui/Form";
+import Input from "../../ui/Input";
 import { todoType } from "@/types/todoType";
 import { AiFillEdit } from "react-icons/ai";
 

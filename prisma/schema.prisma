@@ -7,12 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model GroupApp {
+  id         String   @id @default(cuid())
+  name       String
+  createdAt  DateTime @default(now())
+  selected   Boolean  @default(false)
+  groups     Group[]
+}
 
 model Group {
   id         String   @id @default(cuid())
   name       String
   createdAt  DateTime @default(now())
   selected   Boolean  @default(false)
+  groupAppId String?
+  groupApp   GroupApp? @relation(fields: [groupAppId], references: [id])
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  tags       Tag[]
+}
+
+model Category {
+  id     String   @id @default(cuid())
+  title  String
+  groups Group[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String
+  color     String
+  icon      String
+  selected  Boolean  @default(false)
+  groupId   String
+  group     Group    @relation(fields: [groupId], references: [id])
 }
 
 model Todo {

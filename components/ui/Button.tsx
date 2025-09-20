@@ -38,7 +38,6 @@ const Button = ({type,text,onClick, actionButton,smallButton,checked,abs,deleted
       aria-label={typeof text === 'string' ? text : 'Bouton'}
       role="button"
       tabIndex={0}
-      autoFocus={abs ? true : undefined}
     >
       {text}
     </button>

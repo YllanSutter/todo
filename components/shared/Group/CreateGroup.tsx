@@ -1,6 +1,6 @@
-import Form from "../ui/Form";
-import InputDaisy from "../ui/InputDaisy";
-import Button from "../ui/Button";
+import Form from "../../ui/Form";
+import InputDaisy from "../../ui/InputDaisy";
+import Button from "../../ui/Button";
 import { createGroup } from "@/app/actions/todoActions";
 
 const createGroupTodo = () => {

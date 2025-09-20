@@ -1,7 +1,7 @@
-import AddTodo from "@/components/shared/AddTodo";
+import AddTodo from "@/components/shared/Todo/AddTodo";
 import { prisma } from "@/utils/prisma";
 import Todo from "@/components/shared/Todo";
-import CreateGroup from "@/components/shared/CreateGroup";
+import CreateGroup from "@/components/shared/Group/CreateGroup";
 import Group from "@/components/shared/Group";
 
 async function getData() {
@@ -55,7 +55,7 @@ const Home = async () => {
           <div className="GroupsList grid gap-4 items-start">
             <CreateGroup/>
             {groups.map((group,id) =>(
-              <div className="card bg-slate-900 hover:bg-slate-800 transition-all duration-500 text-neutral-content w-96" key={id}>
+              <div className="card transition-all duration-500 text-neutral-content w-96" key={id}>
                 
                   <Group group={group}/>
               </div>

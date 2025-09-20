@@ -1,11 +1,11 @@
-import Form from "../ui/Form";
-import InputDaisy from "../ui/InputDaisy";
-import Button from "../ui/Button";
+import Form from "../../ui/Form";
+import InputDaisy from "../../ui/InputDaisy";
+import Button from "../../ui/Button";
 import { create } from "@/app/actions/todoActions";
 
 const AddTodo = () => {
   return (
-    <Form action={create} className="w-1/2 m-auto">
+    <Form action={create} className="w-full">
         <div className="flex gap-2">
             <InputDaisy 
             name="input"
