@@ -284,7 +284,7 @@ export async function selectGroupTo(groupId: string, selectedBase: boolean)
         await prisma.group.updateMany({
             where: {
                 id: {
-                    in: baseGroups.map((group) => group.id)
+                    in: baseGroups.map((group: { id: string }) => group.id)
                 }
             },
             data: {
