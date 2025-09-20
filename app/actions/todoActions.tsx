@@ -2,8 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/prisma";
-
-import { todoType } from "@/types/todoType";
+import type { todoType } from "@/types/todoType";
 
 export async function create(formData: FormData) {
     const input = formData.get("input") as string;
@@ -119,25 +118,24 @@ export async function changeStatus(formData : FormData){
         },
     });
 
-    if(!todo)
-    {
-        return;
-    }
+    // Fetch all todos and sort them
+    let baseTodos: todoType[] = await prisma.todo.findMany();
+    baseTodos = baseTodos.sort((a: todoType, b: todoType) => (a.order ?? 0) - (b.order ?? 0));
 
     const updatedStatus = !todo?.isCompleted;
 
     await prisma.todo.update({
         where: {
-          id: inputId,
+            id: inputId,
         },
         data: {
-          isCompleted: updatedStatus,
+            isCompleted: updatedStatus,
         },
-      });
-    
-      revalidatePath("/");
-    
-      return updatedStatus;
+    });
+
+    revalidatePath("/");
+
+    return updatedStatus;
 }
 
 export async function edit(formData:FormData) {
@@ -229,10 +227,10 @@ export async function HideTodoChildLines(Currentindentation: number, Currentorde
     let baseTodos = await prisma.todo.findMany();
 
     // Trier les tâches par ordre croissant
-    baseTodos = baseTodos.sort((a, b) => a.order - b.order);
+    baseTodos = baseTodos.sort((a: todoType, b: todoType) => (a.order ?? 0) - (b.order ?? 0));
 
     // Trouver la tâche correspondant à l'ordre actuel
-    const selectedTodo = baseTodos.find(todo => todo.order === Currentorder);
+    const selectedTodo = baseTodos.find((todo: todoType) => todo.order === Currentorder);
 
     // Si aucune tâche ne correspond à l'ordre actuel, ne rien faire
     if (!selectedTodo) {
@@ -240,7 +238,7 @@ export async function HideTodoChildLines(Currentindentation: number, Currentorde
     }
 
     // Obtenir l'indice de la tâche sélectionnée dans la liste des tâches triées
-    const selectedIndex = baseTodos.findIndex(todo => todo.order === Currentorder);
+    const selectedIndex = baseTodos.findIndex((todo: todoType) => todo.order === Currentorder);
     const todoBase = baseTodos[selectedIndex];
     await prisma.todo.update({
         where: {
@@ -253,11 +251,11 @@ export async function HideTodoChildLines(Currentindentation: number, Currentorde
 
     // Parcourir toutes les tâches pour mettre à jour celles qui doivent l'être, à partir de l'indice de la tâche sélectionnée
     for (let i = selectedIndex + 1; i < baseTodos.length; i++) {
-        const todo = baseTodos[i];
+    const todo: todoType = baseTodos[i];
 
         //console.log(todo.order+ "Base : "+todo.indentation+" / Current : "+Currentindentation);
         // Si l'indentation de la tâche est inférieure ou égale à l'indentation de la tâche sélectionnée, arrêter la mise à jour
-        if (todo.indentation <= Currentindentation) {
+        if ((todo.indentation ?? 0) <= Currentindentation) {
             break;
         }
 
@@ -282,11 +280,11 @@ export async function selectGroupTo(groupId: string, selectedBase: boolean)
     let baseGroups = await prisma.group.findMany();
 
     if (baseGroups.length > 0) {
-        // Incrémenter les ordres des tâches suivantes
+        // Désélectionner tous les groupes
         await prisma.group.updateMany({
             where: {
                 id: {
-                    in: baseGroups.map(group => group.id)
+                    in: baseGroups.map((group) => group.id)
                 }
             },
             data: {
