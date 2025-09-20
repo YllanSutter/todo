@@ -3,13 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/prisma";
 
-// Define TodoType interface to match the structure of your todos
-interface TodoType {
-    id: string;
-    order: number;
-    // Add other fields as needed
-    [key: string]: any;
-}
+import { todoType } from "@/types/todoType";
 
 export async function create(formData: FormData) {
     const input = formData.get("input") as string;
@@ -95,14 +89,14 @@ export async function createAdd(Currentindentation: number, Currentorder: number
     });
 
     // Mettre à jour les ordres des tâches suivantes si nécessaire
-    const todosToUpdate = baseTodos.filter((todo: TodoType) => todo.order >= newOrder);
+    const todosToUpdate = baseTodos.filter((todo: todoType) => typeof todo.order === "number" && todo.order >= newOrder);
 
     if (todosToUpdate.length > 0) {
         // Incrémenter les ordres des tâches suivantes
         await prisma.todo.updateMany({
             where: {
                 id: {
-                    in: todosToUpdate.map(todo => todo.id)
+                    in: todosToUpdate.map((todo: todoType) => todo.id)
                 }
             },
             data: {
