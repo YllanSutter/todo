@@ -3,6 +3,8 @@ import { prisma } from "@/utils/prisma";
 import Todo from "@/components/shared/Todo";
 import CreateGroup from "@/components/shared/Group/CreateGroup";
 import Group from "@/components/shared/Group";
+import type { groupType } from "@/types/groupType";
+import type { todoType } from "@/types/todoType";
 
 async function getData() {
   const data = await prisma.todo.findMany({
@@ -54,7 +56,7 @@ const Home = async () => {
         <div className="flex gap-10 items-start">
           <div className="GroupsList grid gap-4 items-start">
             <CreateGroup/>
-            {groups.map((group,id) =>(
+            {groups.map((group: groupType, id: number) =>(
               <div className="card transition-all duration-500 text-neutral-content w-96" key={id}>
                 
                   <Group group={group}/>
@@ -64,7 +66,7 @@ const Home = async () => {
           <div className="flex justify-center flex-col w-full card bg-slate-900 p-10">
               <AddTodo/>
               <div className="flex flex-col barreLeft items-center justify-center mt-10 w-full">
-                {data.map((todo, id) => (
+                {data.map((todo: todoType, id: number) => (
                   <div className="w-full" key={id}>
                     <Todo todo={todo} />
                   </div>
